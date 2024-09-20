@@ -8,8 +8,21 @@ import { useState } from "react";
 export default function ShortenForm() {
   const [url, setUrl] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const response = await fetch('/api/shorten', {
+        method:"POST",
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify({url})
+      })
+      await response.json();
+      setUrl('');
+    } catch (error) {
+      console.error("Error shortening URL:", error)
+    }finally{
+
+    }
   };
   return (
     <form onSubmit={handleSubmit} className="mb-4">
