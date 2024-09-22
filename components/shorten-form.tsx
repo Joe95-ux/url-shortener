@@ -5,7 +5,11 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
 
-export default function ShortenForm() {
+interface ShortenFormProps{
+  handleUrlShortened: ()=> void
+}
+
+export default function ShortenForm({handleUrlShortened}: ShortenFormProps) {
   const [url, setUrl] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,6 +22,7 @@ export default function ShortenForm() {
       })
       await response.json();
       setUrl('');
+      handleUrlShortened;
     } catch (error) {
       console.error("Error shortening URL:", error)
     }finally{
