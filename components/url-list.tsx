@@ -15,8 +15,10 @@ export default function UrlList() {
   const [urls, setUrls] = useState<Url[]>([])
   const [copied, setCopied] = useState<boolean>(false);
   const [copyUrl, setCopyUrl] = useState<string>('');
+  const [isLoadingUrls, setIsLoadingUrls] = useState<boolean>(false);
 
   const fetchUrls = async ()=>{
+    setIsLoadingUrls(true);
     try {
       const response = await fetch('/api/urls');
       const data = await response.json();
@@ -25,6 +27,8 @@ export default function UrlList() {
     } catch (error) {
       console.error('Error fetching urls', error);
       
+    }finally{
+      setIsLoadingUrls(false);
     }
   }
 
@@ -48,6 +52,28 @@ export default function UrlList() {
       toast.success("Url copied successfully")
     })
  
+  }
+  if(isLoadingUrls){
+    return(
+      <div className="animate-pulse">
+        <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
+        <ul className="space-y-2">
+          {[1,2,3].map((num)=>(
+            <li key={num} className="flex items-center gap-2 rounded-md border bg-card p-4 text-card-foreground justify-between">
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div className="flex items-center gap-3">
+                <div className="h-5 w-5 bg-gray-200 rounded"></div>
+                <span className="flex items-center gap-2">
+                  <div className="h-4 w-4 bg-gray-200 rounded"></div>
+                  <div className="h-4 bg-gray-200 w-10 rounded"></div>
+                </span>
+              </div>
+              
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   }
   return (
     <div>
