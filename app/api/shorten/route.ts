@@ -9,7 +9,7 @@ export async function POST(request:NextRequest){
 
     const shortenUrl = await prisma.url.create({
         data:{
-            originalUrl: url,
+            originUrl: url,
             shortCode
 
         }

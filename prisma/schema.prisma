@@ -13,10 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Url{
-  id String @id @default(cuid())
-  originalUrl String
-  shortCode String @unique
-  createdAt DateTime @default(now())
-  visits Int @default(0)
+model Url {
+  id          String   @id @default(cuid())
+  originUrl   String
+  shortCode   String   @unique
+  createdAt   DateTime @default(now())
+  visits      Int      @default(0)
 }

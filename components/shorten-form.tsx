@@ -4,6 +4,7 @@ import React from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import {toast} from "sonner";
 
 interface ShortenFormProps{
   handleUrlShortened: ()=> void
@@ -24,13 +25,16 @@ export default function ShortenForm({handleUrlShortened}: ShortenFormProps) {
       })
       await response.json();
       setUrl('');
-      handleUrlShortened;
+      toast.success("Url shortened successfully");
+      handleUrlShortened();
     } catch (error) {
       console.error("Error shortening URL:", error)
+      toast.error("Error shortening URL");
     }finally{
       setIsLoading(false);
     }
   };
+
   return (
     <form onSubmit={handleSubmit} className="mb-4">
       <div className="space-y-4">
