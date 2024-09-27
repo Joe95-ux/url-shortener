@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "../components/theme-provider";
+import {ModeToggle} from "../components/ui/mode-toggle";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -29,8 +31,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster/>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster />
+          <nav className="flex m-4 p-2">
+            <div className="ml-auto justify-end">
+              <ModeToggle/>
+            </div> 
+          </nav>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
